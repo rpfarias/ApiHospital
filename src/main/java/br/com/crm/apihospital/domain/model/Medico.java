@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Setter
 @Getter
@@ -40,6 +41,6 @@ public class Medico {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate nascimento;
 
-    @OneToOne(mappedBy = "medico", fetch = FetchType.LAZY)
-    private Atendimento atendimento;
+    @OneToMany(mappedBy = "medico", fetch = FetchType.LAZY)
+    private List<Atendimento> atendimentos;
 }

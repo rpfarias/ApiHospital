@@ -3,10 +3,7 @@ package br.com.crm.apihospital.domain.model;
 import br.com.crm.apihospital.enumeration.StatusAtendimento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -33,10 +30,13 @@ public class Atendimento {
     @Enumerated(EnumType.STRING)
     private StatusAtendimento statusAtendimento;
 
-    @OneToOne(mappedBy = "atendimento", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paciente_id", updatable = false, insertable = false)
     private Paciente paciente;
 
-    @OneToOne
-    @JoinColumn(name = "medico_id")
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medico_id", updatable = false, insertable = false)
     private Medico medico;
 }
