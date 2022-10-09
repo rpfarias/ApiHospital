@@ -2,6 +2,8 @@ package br.com.crm.apihospital.controller;
 
 import br.com.crm.apihospital.domain.model.Atendimento;
 import br.com.crm.apihospital.service.AtendimentoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,7 +12,11 @@ import java.util.List;
 @RequestMapping(value = "/api/atendimentos")
 public class AtendimentoController {
 
-    private AtendimentoService atendimentoService;
+    private final AtendimentoService atendimentoService;
+
+    public AtendimentoController(AtendimentoService atendimentoService) {
+        this.atendimentoService = atendimentoService;
+    }
 
     @GetMapping
     public List<Atendimento> listaAtendimento() {
@@ -23,13 +29,14 @@ public class AtendimentoController {
     }
 
     @PostMapping
-    public Atendimento create(Atendimento atendimento) {
-        return atendimentoService.create(atendimento);
+    public ResponseEntity create(@RequestBody Atendimento atendimento) {
+        atendimentoService.create(atendimento);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Atendimento criado com sucesso");
     }
 
     @PutMapping("/{id}")
     public Atendimento update(@PathVariable Long id, @RequestBody Atendimento atendimento) {
-        return atendimentoService.create(atendimento);
+        return atendimentoService.update(atendimento);
     }
 
     @DeleteMapping("/{id}")
