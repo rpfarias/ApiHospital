@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
-@Setter
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,4 +46,24 @@ public class Paciente {
 
     @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
     private List<Atendimento> atendimentos;
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public void setAtendimentos(List<Atendimento> atendimentos) {
+        this.atendimentos = atendimentos;
+    }
 }
