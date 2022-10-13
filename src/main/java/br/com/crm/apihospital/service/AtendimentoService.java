@@ -31,7 +31,7 @@ public class AtendimentoService {
 
         Atendimento newAtendimento = new Atendimento();
         newAtendimento.setMedico(atendimento.getMedico());
-        newAtendimento.setPacientes(atendimento.getPacientes());
+        newAtendimento.setPaciente(atendimento.getPaciente());
         newAtendimento.setStatusAtendimento(atendimento.getStatusAtendimento());
         newAtendimento.setObservacao(atendimento.getObservacao());
         newAtendimento.setDataAtendimento(atendimento.getDataAtendimento());

@@ -31,21 +31,13 @@ public class Atendimento {
     @Enumerated(EnumType.STRING)
     private StatusAtendimento statusAtendimento;
 
-//    @ToString.Exclude
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "paciente_id", updatable = false, insertable = false)
-//    private Paciente paciente;
-
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medico_id", updatable = false, insertable = false)
     private Medico medico;
 
-    @JsonManagedReference
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tbl_atendimento_paciente_rel",
-            joinColumns = @JoinColumn(name = "atendimento_id"),
-            inverseJoinColumns = @JoinColumn(name = "paciente_id"))
-    private Set<Paciente> pacientes = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paciente_id", updatable = false, insertable = false)
+    private Paciente paciente;
 }

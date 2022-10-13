@@ -45,7 +45,7 @@ public class Paciente {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
-    @ManyToMany(mappedBy = "pacientes", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
     private List<Atendimento> atendimentos;
 
     public void setNome(String nome) {
