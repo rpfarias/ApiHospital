@@ -13,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,16 +36,16 @@ public class Paciente {
     @CPF
     private String cpf;
 
-    @NotBlank(message = "Data de nascimento é obrigatório")
+//    @NotBlank(message = "Data de nascimento é obrigatório")
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate nascimento;
+    private Date nascimento;
 
     @Column(nullable = false)
     @JsonValue
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
-    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "pacientes", fetch = FetchType.LAZY)
     private List<Atendimento> atendimentos;
 
     public void setNome(String nome) {
@@ -55,7 +56,7 @@ public class Paciente {
         this.cpf = cpf;
     }
 
-    public void setNascimento(LocalDate nascimento) {
+    public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
     }
 

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,18 +30,18 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Paciente paciente) {
+    public ResponseEntity create(@RequestBody @Valid Paciente paciente) {
         pacienteService.create(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body("Paciente criado com sucesso");
     }
 
-    @PutMapping
-    public Paciente update(@PathVariable Long id, @RequestBody Paciente paciente) {
-        return pacienteService.update(paciente);
+    @PutMapping("/{id}")
+    public Paciente update(@PathVariable Long id, @RequestBody @Valid Paciente paciente) {
+        return pacienteService.update(paciente, id);
     }
 
-    @DeleteMapping
-    public void deleteById(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable ("id") Long id) {
         pacienteService.deleteById(id);
     }
 }

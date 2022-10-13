@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@Setter
+//@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tbl_user")
@@ -47,4 +47,24 @@ public class Users {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }

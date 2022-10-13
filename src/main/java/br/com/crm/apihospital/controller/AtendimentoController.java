@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,14 +30,14 @@ public class AtendimentoController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Atendimento atendimento) {
+    public ResponseEntity create(@RequestBody @Valid Atendimento atendimento) {
         atendimentoService.create(atendimento);
         return ResponseEntity.status(HttpStatus.CREATED).body("Atendimento criado com sucesso");
     }
 
     @PutMapping("/{id}")
-    public Atendimento update(@PathVariable Long id, @RequestBody Atendimento atendimento) {
-        return atendimentoService.update(atendimento);
+    public Atendimento update(@PathVariable Long id, @RequestBody @Valid Atendimento atendimento) {
+        return atendimentoService.update(atendimento, id);
     }
 
     @DeleteMapping("/{id}")

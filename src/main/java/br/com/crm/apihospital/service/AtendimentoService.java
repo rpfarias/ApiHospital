@@ -18,7 +18,8 @@ public class AtendimentoService {
     }
 
     public List<Atendimento> findAll() {
-        return atendimentoRepository.findAll();
+        var test = atendimentoRepository.findAll();
+        return test;
     }
 
     public Atendimento findById(Long id) {
@@ -27,11 +28,22 @@ public class AtendimentoService {
     }
 
     public Atendimento create(Atendimento atendimento) {
+
+        Atendimento newAtendimento = new Atendimento();
+        newAtendimento.setMedico(atendimento.getMedico());
+        newAtendimento.setPacientes(atendimento.getPacientes());
+        newAtendimento.setStatusAtendimento(atendimento.getStatusAtendimento());
+        newAtendimento.setObservacao(atendimento.getObservacao());
+        newAtendimento.setDataAtendimento(atendimento.getDataAtendimento());
         return atendimentoRepository.save(atendimento);
     }
 
-    public Atendimento update(Atendimento atendimento) {
-        return atendimentoRepository.save(atendimento);
+    public Atendimento update(Atendimento atendimento, Long id) {
+        Atendimento updatePaciente = atendimentoRepository.findById(id).get();
+        updatePaciente.setObservacao(atendimento.getObservacao());
+        updatePaciente.setDataAtendimento(atendimento.getDataAtendimento());
+        updatePaciente.setStatusAtendimento(atendimento.getStatusAtendimento());
+        return atendimentoRepository.save(updatePaciente);
     }
 
     public void deleteById(Long id) {

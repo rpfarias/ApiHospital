@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,11 +35,11 @@ public class Medico {
 
     @NotBlank(message = "CRM é obrigatório")
     @Column(length = 11, unique = true)
+    @JsonFormat(pattern = "12345/BA")
     private String crm;
 
-    @NotBlank(message = "Data de nascimento é obrigatório")
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate nascimento;
+    private Date nascimento;
 
     @OneToMany(mappedBy = "medico", fetch = FetchType.LAZY)
     private List<Atendimento> atendimentos;
@@ -56,7 +56,7 @@ public class Medico {
         this.crm = crm;
     }
 
-    public void setNascimento(LocalDate nascimento) {
+    public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
     }
 

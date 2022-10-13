@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PacienteService {
@@ -27,18 +28,26 @@ public class PacienteService {
     }
 
     public Paciente create(Paciente paciente) {
-
-        Paciente newPaciente = new Paciente();
-        newPaciente.setNome(paciente.getNome());
-        newPaciente.setCpf(newPaciente.getCpf());
-        newPaciente.setSexo(paciente.getSexo());
-        newPaciente.setNascimento(paciente.getNascimento());
-        newPaciente.setAtendimentos(paciente.getAtendimentos());
-        return pacienteRepository.save(paciente);
+        Optional<Paciente> verificarCpf = pacienteRepository.findByCpf(paciente.getCpf());
+        if (!verificarCpf.isPresent()) {
+            Paciente newPaciente = new Paciente();
+            newPaciente.setNome(paciente.getNome());
+            newPaciente.setCpf(paciente.getCpf());
+            newPaciente.setSexo(paciente.getSexo());
+            newPaciente.setNascimento(paciente.getNascimento());
+            return pacienteRepository.save(paciente);
+        } else
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format("CPF { %s } já cadastrado.", paciente.getCpf()));
     }
 
-    public Paciente update(Paciente paciente) {
-        return pacienteRepository.save(paciente);
+    public Paciente update(Paciente paciente, Long id) {
+        Paciente updatePaciente = pacienteRepository.findById(id).get();
+        updatePaciente.setNome(paciente.getNome());
+        updatePaciente.setCpf(paciente.getCpf());
+        updatePaciente.setSexo(paciente.getSexo());
+        updatePaciente.setNascimento(paciente.getNascimento());
+        return pacienteRepository.save(updatePaciente);
     }
 
     public void deleteById(Long id) {
