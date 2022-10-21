@@ -1,7 +1,6 @@
 package br.com.crm.apihospital.controller;
 
 import br.com.crm.apihospital.domain.model.Medico;
-import br.com.crm.apihospital.domain.model.Paciente;
 import br.com.crm.apihospital.service.MedicoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

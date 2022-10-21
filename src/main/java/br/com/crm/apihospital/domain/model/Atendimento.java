@@ -1,18 +1,14 @@
 package br.com.crm.apihospital.domain.model;
 
-import br.com.crm.apihospital.enumeration.StatusAtendimento;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -27,9 +23,7 @@ public class Atendimento {
 
     private String observacao;
 
-    @JsonValue
-    @Enumerated(EnumType.STRING)
-    private StatusAtendimento statusAtendimento;
+    private Boolean ativo;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)

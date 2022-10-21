@@ -1,6 +1,7 @@
 package br.com.crm.apihospital.controller;
 
 import br.com.crm.apihospital.domain.model.Atendimento;
+import br.com.crm.apihospital.domain.model.Medico;
 import br.com.crm.apihospital.service.AtendimentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,14 @@ public class AtendimentoController {
     }
 
     @GetMapping
-    public List<Atendimento> listaAtendimento() {
+    public List<Atendimento> findAll() {
+//        return ResponseEntity.ok(atendimentoService.findAll()).getBody();
         return atendimentoService.findAll();
     }
 
     @GetMapping("/{id}")
     public Atendimento findById(@PathVariable Long id) {
-        return atendimentoService.findById(id);
+        return ResponseEntity.ok(atendimentoService.findById(id)).getBody();
     }
 
     @PostMapping
