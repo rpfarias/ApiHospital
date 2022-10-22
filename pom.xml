@@ -13,9 +13,12 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>ApiHospital</name>
     <description>ApiHospital</description>
+
     <properties>
         <java.version>11</java.version>
+        <springdoc-openapi-ui.version>1.6.11</springdoc-openapi-ui.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,7 +51,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.11</version>
+            <version>${springdoc-openapi-ui.version}</version>
         </dependency>
     </dependencies>
 

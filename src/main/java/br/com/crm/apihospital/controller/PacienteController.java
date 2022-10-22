@@ -1,47 +1,65 @@
 package br.com.crm.apihospital.controller;
 
-import br.com.crm.apihospital.domain.model.Paciente;
-import br.com.crm.apihospital.service.PacienteService;
-import org.springframework.http.HttpStatus;
+import br.com.crm.apihospital.controller.helper.BaseController;
+import br.com.crm.apihospital.domain.request.PatientRequest;
+import br.com.crm.apihospital.domain.response.PatientResponse;
+import br.com.crm.apihospital.service.PatientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+
+import static br.com.crm.apihospital.domain.converters.PatientConverter.toPatientResponse;
+import static br.com.crm.apihospital.domain.converters.PatientConverter.toPatientResponseList;
 
 @RestController
-@RequestMapping(value = "/api/pacientes")
-public class PacienteController {
+@RequestMapping(value = "/api/patients")
+public class PacienteController extends BaseController {
 
-    private final PacienteService pacienteService;
+    private final PatientService patientService;
 
-    public PacienteController(PacienteService pacienteService) {
-        this.pacienteService = pacienteService;
+    public PacienteController(final PatientService patientService) {
+        this.patientService = patientService;
     }
 
     @GetMapping
-    public List<Paciente> findAll() {
-        return pacienteService.findAll();
+    public ResponseEntity<List<PatientResponse>> findAll() {
+        return Optional
+                .ofNullable(patientService.findAll())
+                .map(m -> ResponseEntity.ok().body(toPatientResponseList(m)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
-    public Paciente findById(@PathVariable Long id) {
-        return pacienteService.findById(id);
+    public ResponseEntity<PatientResponse> findById(@PathVariable Long id) {
+        return Optional
+                .ofNullable(patientService.findById(id))
+                .map(m -> ResponseEntity.ok().body(toPatientResponse(m)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody @Valid Paciente paciente) {
-        pacienteService.create(paciente);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Paciente criado com sucesso");
+    public ResponseEntity<PatientResponse> create(@RequestBody @Valid PatientRequest request) {
+        return Optional
+                .ofNullable(patientService.create(request))
+                .map(m -> ResponseEntity.created(URI.create(String.format("/api/v1/patients/%s", m.getId()))).body(toPatientResponse(m)))
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/{id}")
-    public Paciente update(@PathVariable Long id, @RequestBody @Valid Paciente paciente) {
-        return pacienteService.update(paciente, id);
+    public ResponseEntity<PatientResponse> update(@PathVariable Long id, @RequestBody @Valid PatientRequest request) {
+        return Optional
+                .ofNullable(patientService.update(id, request))
+                .map(m -> ResponseEntity.ok().body(toPatientResponse(m)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable ("id") Long id) {
-        pacienteService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
+        patientService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
