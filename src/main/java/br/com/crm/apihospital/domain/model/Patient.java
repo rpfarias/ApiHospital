@@ -1,6 +1,6 @@
 package br.com.crm.apihospital.domain.model;
 
-import br.com.crm.apihospital.enumeration.Sexo;
+import br.com.crm.apihospital.enumeration.Gender;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 
@@ -20,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Paciente {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +27,7 @@ public class Paciente {
 
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 3, max = 50)
-    private String nome;
+    private String name;
 
     @NotBlank(message = "CPF é obrigatório")
     @Column(length = 11, unique = true)
@@ -36,14 +35,13 @@ public class Paciente {
     private String cpf;
 
 //    @NotBlank(message = "Data de nascimento é obrigatório")
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date nascimento;
+//    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate birth;
 
     @Column(nullable = false)
-    @JsonValue
     @Enumerated(EnumType.STRING)
-    private Sexo sexo;
+    private Gender gender;
 
-    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY)
-    private List<Atendimento> atendimentos;
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    private List<Consultation> consultations;
 }

@@ -1,6 +1,6 @@
 package br.com.crm.apihospital.enumeration;
 
-public enum Sexo {
+public enum Gender {
 
     M, F, G, L, T
 }

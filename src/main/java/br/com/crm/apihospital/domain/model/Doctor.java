@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Medico {
+public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,21 +25,18 @@ public class Medico {
 
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 3, max = 50)
-    private String nome;
+    private String name;
 
     @NotBlank(message = "CPF é obrigatório")
     @Column(length = 11, unique = true)
     @CPF
     private String cpf;
 
-    @NotBlank(message = "CRM é obrigatório")
-    @Column(length = 11, unique = true)
-    @JsonFormat(pattern = "12345/BA")
     private String crm;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date nascimento;
+    private LocalDate birth;
 
-    @OneToMany(mappedBy = "medico", fetch = FetchType.LAZY)
-    private List<Atendimento> atendimentos;
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
+    private List<Consultation> consultations;
 }
