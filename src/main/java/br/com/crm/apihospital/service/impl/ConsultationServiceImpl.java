@@ -3,6 +3,7 @@ package br.com.crm.apihospital.service.impl;
 import br.com.crm.apihospital.domain.model.Consultation;
 import br.com.crm.apihospital.domain.model.Doctor;
 import br.com.crm.apihospital.domain.model.Patient;
+import br.com.crm.apihospital.domain.request.ConsultationFilterRequest;
 import br.com.crm.apihospital.domain.request.ConsultationRequest;
 import br.com.crm.apihospital.repository.ConsultationRepository;
 import br.com.crm.apihospital.service.ConsultationService;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static br.com.crm.apihospital.domain.converters.ConsultationConverter.*;
@@ -51,6 +53,12 @@ public class ConsultationServiceImpl implements ConsultationService {
         log.info("Trying to get all the consultation");
 
         return consultationRepository.findAll();
+    }
+
+    public List<ConsultationFilterRequest> findConsultationByPeriod(LocalDate initialDate, LocalDate finalDate) {
+        log.info("Trying to get all the consultation");
+
+        return consultationRepository.findConsultationByPeriod(initialDate, finalDate);
     }
 
     @Override

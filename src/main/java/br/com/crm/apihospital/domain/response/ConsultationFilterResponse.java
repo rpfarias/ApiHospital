@@ -1,8 +1,5 @@
 package br.com.crm.apihospital.domain.response;
 
-import br.com.crm.apihospital.domain.model.Doctor;
-import br.com.crm.apihospital.domain.model.Patient;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,7 +9,7 @@ import java.time.LocalDate;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsultationResponse {
+public class ConsultationFilterResponse {
 
     private Long id;
     private LocalDate consultationDate;
@@ -20,8 +17,6 @@ public class ConsultationResponse {
     private Boolean isActive;
     private Long doctorId;
     private Long patientId;
-    private LocalDate initialDate;
-    private LocalDate finalDate;
 //  caso queira passar o objeto todo
 //  private Doctor doctor;
 //  private Patient patient;

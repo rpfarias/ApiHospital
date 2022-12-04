@@ -1,11 +1,14 @@
 package br.com.crm.apihospital.domain.converters;
 
 import br.com.crm.apihospital.domain.model.Consultation;
+import br.com.crm.apihospital.domain.request.ConsultationFilterRequest;
 import br.com.crm.apihospital.domain.request.ConsultationRequest;
+import br.com.crm.apihospital.domain.response.ConsultationFilterResponse;
 import br.com.crm.apihospital.domain.response.ConsultationResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ConsultationConverter {
@@ -31,7 +34,24 @@ public class ConsultationConverter {
         return response;
     }
 
-    public static List<ConsultationResponse> toConsultationResponseList(List<Consultation> consultation) {
+    public static ConsultationFilterResponse toConsultationFilterResponse(Consultation consultation) {
+        ConsultationFilterResponse responseFilter = new ConsultationFilterResponse();
+        responseFilter.setId(consultation.getId());
+        responseFilter.setConsultationDate(consultation.getConsultationDate());
+        responseFilter.setObservation(consultation.getObservation());
+        responseFilter.setIsActive(consultation.getIsActive());
+        responseFilter.setDoctorId(consultation.getDoctorId());
+        responseFilter.setPatientId(consultation.getPatientId());
+//        response.setDoctor(consultation.getDoctor());
+//        response.setPatient(consultation.getPatient());
+        return responseFilter;
+    }
+
+//    public static List<ConsultationFilterResponse> toConsultationFilterResponseList(List<ConsultationFilterResponse> consultation) {
+//        return consultation.stream().map(ConsultationConverter::toConsultationFilterResponse).collect(Collectors.toList());
+//    }
+
+    public static List<ConsultationResponse> toConsultationResponseList(List<Consultation> consultation) {// correto
         return consultation.stream().map(ConsultationConverter::toConsultationResponse).collect(Collectors.toList());
     }
 

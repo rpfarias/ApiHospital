@@ -17,7 +17,6 @@ public class Consultation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate consultationDate;
 
     private String observation;
